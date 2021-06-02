@@ -24,4 +24,18 @@ enum AnimalType: Character {
             return "Ваша сила - в мудрости. Медленный и вдумчивый выигрывает на больших дистанциях."
         }
     }
+    
+    var order: Int {
+        switch self {
+        case .dog:
+            return 2
+        case .cat:
+            return 4
+        case .rabbit:
+            return 1
+        case .turtle:
+            return 3
+        }
+    }
+    
 }

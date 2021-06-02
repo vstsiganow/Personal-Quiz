@@ -9,34 +9,25 @@
 import UIKit
 
 class ResultViewController: UIViewController {
-    // 1. Массив ответов
-    // 2. Определить наиболее часто встречаемый тип животного
-    // 3. Отобразить результат
-    // 4. Избавиться от кнопки Back
-    
     @IBOutlet weak var answerTypeLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     
-    
     var answers: [Answer] = []
     
-    private var mostFrequentAnswer: AnimalType = AnimalType.cat
+    private var mostFrequentAnswer: AnimalType!
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.setHidesBackButton(true, animated: true)
-        print(answers)
-        countAnimalTypes()
+        //print(answers) //Для удобства отслеживания данных в ответе
+        countFrequentAnswer()
         answerTypeLabel.text = "Вы - \(mostFrequentAnswer.rawValue)"
         descriptionLabel.text = mostFrequentAnswer.definition
     }
-    
 }
 
-
 extension ResultViewController {
-    private func countAnimalTypes() {
+    private func countFrequentAnswer() {
         var answersAnimalTypes = [AnimalType: Int]()
         
         for answer in answers {
@@ -52,15 +43,16 @@ extension ResultViewController {
         }
         
         let maxValue = answersAnimalTypes.values.max() ?? 0
+        var maxOrder = 0
         
-        for answer in answersAnimalTypes {
-            if maxValue == answer.value {
-                mostFrequentAnswer = answer.key
+        for animal in answersAnimalTypes {
+            if maxValue == animal.value {
+                if animal.key.order > maxOrder {
+                    maxOrder = animal.key.order
+                    mostFrequentAnswer = animal.key
+                }
             }
         }
-        
     }
-    
-    
 }
 
